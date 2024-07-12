@@ -1,5 +1,9 @@
 "use client";
 
+import Image from "next/image";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
+
 import {
   FormControl,
   FormDescription,
@@ -28,8 +32,46 @@ interface CustomProps {
 }
 
 const RenderField = ({field, props} : {field: any; props: CustomProps}) => {
-  
-  return <Input type="text" placeholder="Kwame Cody" />;
+  const {fieldType, iconSrc, iconAlt, placeholder} = props
+
+  switch(fieldType){
+    case FormFieldType.INPUT : 
+     return (
+      <div className="flex rounded-md border border-dark-500 bg-dark-400">
+        {iconSrc && (
+          <Image
+          src={iconSrc}
+          alt={iconAlt || 'icon'}
+          width={24}
+          height={24}
+          className="ml-2"
+          />
+        )}
+
+        <FormControl>
+          <Input
+          placeholder={placeholder}
+          {...field}
+          className="shad-input border-0"
+          />
+        </FormControl>
+      </div>
+     )
+     case FormFieldType.PHONE_INPUT:
+      return (
+        <FormControl>
+           <PhoneInput
+             defaultCountry="GH"
+             placeholder={placeholder}
+             international
+             withCountryCallingCode
+             value={field.value as E164Number | undefined}
+             onChange={(value) => field.onChange(value)}
+             className="input-phone"
+           />
+        </FormControl>
+      )
+  }
 };
 
 const CustomFormField = (props: CustomProps) => {
