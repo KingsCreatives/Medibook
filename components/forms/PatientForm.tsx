@@ -11,6 +11,7 @@ import { Form } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitBtn from "../SubmitBtn";
 import { UserFormValidation } from "@/lib/validation";
+import { createUser } from "@/lib/actions/patient.actions";
 
 export enum FormFieldType  {
   INPUT = 'input',
@@ -33,21 +34,21 @@ const PatientForm = () => {
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       phone: ""
     },
   });
 
-  async function onSubmit({username, email, phone}: z.infer<typeof UserFormValidation>) {
+  async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
     setIsLoading(true)
     try {
-      /**const userData = {username, email, phone}
+      const userData = {name, email, phone}
       
       const user = await createUser(userData)
 
       if(user) router.push(`/patients/${user.$id}/register`)
-      **/
+      
     } catch (error) {
       console.log(error)
     }
