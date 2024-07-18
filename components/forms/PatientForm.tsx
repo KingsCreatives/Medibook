@@ -2,59 +2,55 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitBtn from "../SubmitBtn";
 import { UserFormValidation } from "@/lib/validation";
 import { createUser } from "@/lib/actions/patient.actions";
 
-export enum FormFieldType  {
-  INPUT = 'input',
-  TEXTAREA = 'textarea',
-  PHONE_INPUT = 'PhoneInput',
-  CHECKBOX = 'checkbox',
-  DATE_PICKER = 'datePicker',
-  SELECT = 'select',
-  SKELETON = 'skeleton'
+export enum FormFieldType {
+  INPUT = "input",
+  TEXTAREA = "textarea",
+  PHONE_INPUT = "PhoneInput",
+  CHECKBOX = "checkbox",
+  DATE_PICKER = "datePicker",
+  SELECT = "select",
+  SKELETON = "skeleton",
 }
 
-
-
 const PatientForm = () => {
-  
-  const router = useRouter()
-
-  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
     defaultValues: {
       name: "",
       email: "",
-      phone: ""
+      phone: "",
     },
   });
 
-  async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
-    setIsLoading(true)
+  async function onSubmit({
+    name,
+    email,
+    phone,
+  }: z.infer<typeof UserFormValidation>) {
+    setIsLoading(true);
     try {
-      const userData = {name, email, phone}
-      
-      const user = await createUser(userData)
+      const userData = { name, email, phone };
+      const user = await createUser(userData);
 
-      if(user) router.push(`/patients/${user.$id}/register`)
-      
+      if (user) router.push(`/patients/${user.$id}/register`);
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
-
-
 
   return (
     <Form {...form}>
@@ -67,7 +63,7 @@ const PatientForm = () => {
         <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
-          name="Name"
+          name="name"
           label="Full name"
           placeholder="Kwame Cody"
           iconSrc="/assets/icons/user.svg"
