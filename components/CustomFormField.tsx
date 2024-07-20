@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input";
 import { Control } from "react-hook-form";
 import { FormFieldType } from "./forms/PatientForm";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
+import { Textarea } from "./ui/textarea";
+import { Checkbox } from "./ui/checkbox";
 
 interface CustomProps {
   control: Control<any>;
@@ -36,7 +38,15 @@ interface CustomProps {
 }
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
-  const { fieldType, iconSrc, iconAlt, placeholder, showTimeSelect, dateFormat, renderSkeleton } = props;
+  const {
+    fieldType,
+    iconSrc,
+    iconAlt,
+    placeholder,
+    showTimeSelect,
+    dateFormat,
+    renderSkeleton,
+  } = props;
 
   switch (fieldType) {
     case FormFieldType.INPUT:
@@ -97,10 +107,8 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           </FormControl>
         </div>
       );
-     case FormFieldType.SKELETON:
-      return(
-        renderSkeleton ? renderSkeleton(field) : null
-      )
+    case FormFieldType.SKELETON:
+      return renderSkeleton ? renderSkeleton(field) : null;
     case FormFieldType.SELECT:
       return (
         <FormControl>
@@ -110,9 +118,35 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
-            <SelectContent>{props.children}</SelectContent>
+            <SelectContent className="shad-select-content">
+              {props.children}
+            </SelectContent>
           </Select>
         </FormControl>
+      );
+    case FormFieldType.TEXTAREA:
+      return (
+        <FormControl>
+          <Textarea
+            placeholder={placeholder}
+            {...field}
+            className="shad-textarea"
+            disabled={props.disabled}
+          />
+        </FormControl>
+      );
+    case FormFieldType.CHECKBOX:
+      return (
+        <div className="flex item-center">
+          <Checkbox
+            id={props.name}
+            checked={field.value}
+            onCheckedChange={field.onChange}
+          />
+          <label htmlFor={props.name} className="checkbox-label">
+            {props.label}
+          </label>
+        </div>
       );
     default:
       break;
