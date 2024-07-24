@@ -8,40 +8,53 @@ import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitBtn from "../SubmitBtn";
-import { UserFormValidation } from "@/lib/validation";
-import { createUser } from "@/lib/actions/patient.actions";
+import { PatientFormValidation, UserFormValidation } from "@/lib/validation";
+import { registerPatient } from "@/lib/actions/patient.actions";
 import { FormFieldType } from "./PatientForm";
-import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
-import { Doctors, GenderOptions, IdentificationTypes } from "@/constants";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues } from "@/constants";
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
 import FileUpload from "../FileUpload";
 
-const RegistrationForm = async ({ user }: { user: User }) => {
+const RegistrationForm =  ({ user }: { user: User }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof UserFormValidation>>({
-    resolver: zodResolver(UserFormValidation),
+  const form = useForm<z.infer<typeof PatientFormValidation>>({
+    resolver: zodResolver(PatientFormValidation),
     defaultValues: {
+      ...PatientFormDefaultValues,
       name: "",
       email: "",
       phone: "",
     },
   });
 
-  async function onSubmit({
-    name,
-    email,
-    phone,
-  }: z.infer<typeof UserFormValidation>) {
+  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
     setIsLoading(true);
-    try {
-      const userData = { name, email, phone };
-      const user = await createUser(userData);
+    let formData
 
-      if (user) router.push(`/patients/${user.$id}/register`);
+    if(values.identificationDocument && values.identificationDocument.length > 0){
+      const blobFile = new Blob([values.identificationDocument[0]], {type: values.identificationDocument[0].type});
+
+      formData = new FormData()
+      formData.append('blobFile', blobFile)
+      formData.append('fileName', values.identificationDocument[0].name)
+    }
+
+    try {
+      const patientData = {
+        ...values,
+        userId: user.$id,
+        birthDate: new Date(values.birthDate),
+        IdentificationDocument: formData,
+      }
+
+      // @ts-ignore
+      const patient = await registerPatient(patientData)
+      if(patient) router.push(`/patients/${user.$id}/new-appointment`)
     } catch (error) {
       console.log(error);
     } finally {
@@ -202,7 +215,7 @@ const RegistrationForm = async ({ user }: { user: User }) => {
             placeholder="Enterprise Insurance"
           />
           <CustomFormField
-            fieldType={FormFieldType.PHONE_INPUT}
+            fieldType={FormFieldType.INPUT}
             control={form.control}
             name="insurancePolicyNumber"
             label="Insurance Policy Number"
