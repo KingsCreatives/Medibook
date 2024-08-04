@@ -1,4 +1,5 @@
 "use client";
+
 import { convertFileToUrl } from "@/lib/utils";
 import Image from "next/image";
 import React, { useCallback } from "react";
@@ -9,7 +10,7 @@ type FileUploaderProps = {
     onChange: (files: File[]) => void;
 }
 
-const FileUpload = ({ files, onChange }: FileUploaderProps) => {
+const FileUploader = ({ files, onChange }: FileUploaderProps) => {
   const onDrop = useCallback((acceptedFiles: File[]) => {
        onChange(acceptedFiles);
   }, []);
@@ -30,7 +31,7 @@ const FileUpload = ({ files, onChange }: FileUploaderProps) => {
                 </span>
                 or drag and drop
              </p>
-             <p>SVG, PNG, JPEG, Gif (max 800 x 400)</p>
+             <p>SVG, PNG, JPEG, Gif (max 800x400)</p>
            </div>
          </>}
       
@@ -39,4 +40,4 @@ const FileUpload = ({ files, onChange }: FileUploaderProps) => {
 };
 
 
-export default FileUpload
+export default FileUploader

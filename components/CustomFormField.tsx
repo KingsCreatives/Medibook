@@ -6,7 +6,7 @@ import { E164Number } from "libphonenumber-js/core";
 import "react-phone-number-input/style.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import ReactDatePicker from "react-datepicker";
+// import ReactDatePicker from "react-datepicker";
 
 import {
   FormControl,
@@ -21,6 +21,7 @@ import { FormFieldType } from "./forms/PatientForm";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
+import { date } from "zod";
 
 interface CustomProps {
   control: Control<any>;
@@ -92,18 +93,11 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             src="/assets/icons/calendar.svg"
             height={24}
             width={24}
-            alt="user"
+            alt="calender"
             className="ml-2"
           />
           <FormControl>
-            <ReactDatePicker
-              showTimeSelect={props.showTimeSelect ?? false}
-              selected={field.value}
-              onChange={(date: Date) => field.onChange(date)}
-              timeInputLabel="Time:"
-              dateFormat={props.dateFormat ?? "MM/dd/yyyy"}
-              wrapperClassName="date-picker"
-            />
+            <DatePicker selected={field.value} onChange={(date) => field.onChange(date)} dateFormat={dateFormat ?? 'MM/DD/YYYY' } showTimeSelect={showTimeSelect?? false} timeInputLabel="Time:" wrapperClassName="date-picker"/>
           </FormControl>
         </div>
       );
@@ -137,13 +131,13 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       );
     case FormFieldType.CHECKBOX:
       return (
-        <div className="flex item-center">
+        <div className="flex item-center gap-4">
           <Checkbox
             id={props.name}
             checked={field.value}
             onCheckedChange={field.onChange}
           />
-          <label htmlFor={props.name} className="checkbox-label px-4">
+          <label htmlFor={props.name} className="checkbox-label">
             {props.label}
           </label>
         </div>

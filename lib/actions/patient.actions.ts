@@ -3,13 +3,13 @@
 import { ID, Query } from "node-appwrite";
 import {
   BUCKET_ID,
-  DB_ID,
+  DATABASE_ID,
   ENDPOINT,
   PATIENT_COLLECTION,
   PROJECT_ID,
   storage,
   users,
-  db,
+  databases,
 } from "../appwrite.config";
 import { parseStringify } from "../utils";
 import { InputFile } from "node-appwrite/file";
@@ -66,8 +66,8 @@ export const registerPatient = async ({
       ...patient,
     });
 
-    const newPatient = await db.createDocument(
-      DB_ID!,
+    const newPatient = await databases.createDocument(
+      DATABASE_ID!,
       PATIENT_COLLECTION!,
       ID.unique(),
       {

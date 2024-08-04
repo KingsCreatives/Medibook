@@ -16,7 +16,7 @@ import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues }
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
-import FileUpload from "../FileUpload";
+import FileUploader from "../FileUploader";
 
 const RegistrationForm =  ({ user }: { user: User }) => {
   const router = useRouter();
@@ -26,9 +26,9 @@ const RegistrationForm =  ({ user }: { user: User }) => {
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       ...PatientFormDefaultValues,
-      name: "",
-      email: "",
-      phone: "",
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
     },
   });
 
@@ -82,8 +82,8 @@ const RegistrationForm =  ({ user }: { user: User }) => {
         <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
-          label="Full Name"
           name="name"
+          label="Full Name"
           placeholder="Kwame Cody"
           iconSrc="/assets/icons/user.svg"
           iconAlt="user"
@@ -112,9 +112,8 @@ const RegistrationForm =  ({ user }: { user: User }) => {
           <CustomFormField
             fieldType={FormFieldType.DATE_PICKER}
             control={form.control}
-            label="birthDate"
-            name="Date of birth"
-            placeholder="17th May 2000"
+            label="Date of birth"
+            name="birthDate"
           />
 
           <CustomFormField
@@ -129,8 +128,8 @@ const RegistrationForm =  ({ user }: { user: User }) => {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  {GenderOptions.map((option, i) => (
-                    <div key={option + i} className="radio-group">
+                  {GenderOptions.map((option) => (
+                    <div key={option} className="radio-group">
                       <RadioGroupItem value={option} id={option} />
                       <Label htmlFor={option} className="cursor-pointer">
                         {option}
@@ -234,8 +233,8 @@ const RegistrationForm =  ({ user }: { user: User }) => {
           <CustomFormField
             fieldType={FormFieldType.TEXTAREA}
             control={form.control}
-            name="currentMedications"
-            label="Current Medications(if any)"
+            name="currentMedication"
+            label="Current Medication(if any)"
             placeholder="Aspirin"
           />
         </div>
@@ -246,7 +245,7 @@ const RegistrationForm =  ({ user }: { user: User }) => {
             control={form.control}
             name="familyMedicalHistory"
             label="Family Medical History(if any)"
-            placeholder="Mother had Cancer"
+            placeholder="Cousin hads of Hypertension"
           />
           <CustomFormField
             fieldType={FormFieldType.TEXTAREA}
@@ -259,7 +258,7 @@ const RegistrationForm =  ({ user }: { user: User }) => {
 
         <section className="space-y-6">
           <div className="mb-9 space-y-1">
-            <h2 className="sub-header">Identification Verication</h2>
+            <h2 className="sub-header">Identification & Verication</h2>
           </div>
         </section>
 
@@ -268,7 +267,7 @@ const RegistrationForm =  ({ user }: { user: User }) => {
           control={form.control}
           name="identificationType"
           label="Identification Type"
-          placeholder="Select a type"
+          placeholder="Select identification type"
         >
           {IdentificationTypes.map((type) => (
             <SelectItem key={type} value={type}>
@@ -292,7 +291,7 @@ const RegistrationForm =  ({ user }: { user: User }) => {
           label="Identification Document"
           renderSkeleton={(field) => (
             <FormControl>
-              <FileUpload files={field.value} onChange={field.onChange} />
+              <FileUploader files={field.value} onChange={field.onChange} />
             </FormControl>
           )}
         />

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PatientForm from "@/components/forms/PatientForm";
 export default function Home() {
+  const year = new Date().getFullYear();
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">
@@ -12,13 +13,13 @@ export default function Home() {
             height={1000}
             width={1000}
             alt="patient"
-            className="mb-12 h-12 w-fit"
+            className="mb-12 h-10 w-fit"
           />
           <PatientForm />
 
           <div className="text-14-regular mt-20 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
-              @2024 MediBook
+              @{year} MediBook
             </p>
             <Link href="/?admin=true" className="text-green-500">
               Admin
@@ -27,11 +28,11 @@ export default function Home() {
         </div>
       </section>
       <Image
-       src="/assets/images/onboarding-img.png"
-       height={1000}
-       width={1000}
-       alt="patient"
-       className="side-img max-w-[50%]"
+        src="/assets/images/onboarding-img.png"
+        height={1000}
+        width={1000}
+        alt="patient"
+        className="side-img max-w-[50%]"
       />
     </div>
   );
