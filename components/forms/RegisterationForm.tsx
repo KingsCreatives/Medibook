@@ -34,9 +34,7 @@ const RegistrationForm =  ({ user }: { user: User }) => {
 
   async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
     setIsLoading(true);
-    console.log(isLoading)
     let formData
-
     if(values.identificationDocument && values.identificationDocument.length > 0){
       const blobFile = new Blob([values.identificationDocument[0]], {type: values.identificationDocument[0].type});
 
@@ -45,23 +43,23 @@ const RegistrationForm =  ({ user }: { user: User }) => {
       formData.append('fileName', values.identificationDocument[0].name)
     }
 
-    console.log(formData)
 
     try {
       const patientData = {
         ...values,
-        userId: user.$id,
+        userid: user.$id,
         birthDate: new Date(values.birthDate),
-        IdentificationDocument: formData,
+        identificationDocument: formData,
       }
 
+      console.log(patientData)
+
       // @ts-ignore
-      const patient = await registerPatient(patientData)
-      if(patient) router.push(`/patients/${user.$id}/new-appointment`)
+      const patient = await registerPatient(patientData);
+
+      if(patient) router.push(`/patient/${user.$id}/new-appointment`);
     } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
+      
     }
   }
 
