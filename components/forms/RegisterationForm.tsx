@@ -8,7 +8,7 @@ import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitBtn from "../SubmitBtn";
-import { PatientFormValidation, UserFormValidation } from "@/lib/validation";
+import { PatientFormValidation} from "@/lib/validation";
 import { registerPatient } from "@/lib/actions/patient.actions";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
@@ -34,6 +34,7 @@ const RegistrationForm =  ({ user }: { user: User }) => {
 
   async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
     setIsLoading(true);
+    console.log(isLoading)
     let formData
 
     if(values.identificationDocument && values.identificationDocument.length > 0){
@@ -43,6 +44,8 @@ const RegistrationForm =  ({ user }: { user: User }) => {
       formData.append('blobFile', blobFile)
       formData.append('fileName', values.identificationDocument[0].name)
     }
+
+    console.log(formData)
 
     try {
       const patientData = {
