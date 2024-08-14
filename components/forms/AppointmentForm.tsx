@@ -73,15 +73,12 @@ const AppointmentForm = ({
           status: status as Status,
         };
 
-        console.log(appointmentData.status)
-
         const appointment = await createAppointment(appointmentData);
-        
 
         if (appointment) {
           form.reset();
           router.push(
-            `/patients/${userId}/mew-appointments/success?appointmentId=${appointment.$id}`
+            `/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
           );
         }
       }

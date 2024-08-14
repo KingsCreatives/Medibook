@@ -26,7 +26,7 @@ export default async function NewAppointment({
           />
 
           <p className="justify-items-end text-dark-600 xl:text-left copyright mt-10 py-12">
-            @{year} MediBook
+            ©{year} MediBook
           </p>
         </div>
       </section>
