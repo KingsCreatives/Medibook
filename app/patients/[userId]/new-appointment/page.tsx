@@ -4,7 +4,7 @@ import { getPatient } from "@/lib/actions/patient.actions";
 export default async function NewAppointment({
   params: { userId },
 }: SearchParamProps) {
-  const year = new Date().getFullYear();
+  
   const patient = await getPatient(userId);
 
   return (
@@ -26,7 +26,7 @@ export default async function NewAppointment({
           />
 
           <p className="justify-items-end text-dark-600 xl:text-left copyright mt-10 py-12">
-            ©{year} MediBook
+            ©{new Date().getFullYear()} MediBook. All rights reserved
           </p>
         </div>
       </section>

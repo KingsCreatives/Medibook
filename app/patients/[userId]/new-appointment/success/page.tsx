@@ -74,7 +74,9 @@ const SuccessPage = async ({
             New Appointment
           </Link>
         </Button>
-        <p className="copyright">© 2024 MediBook. All rights reserved</p>
+        <p className="copyright">
+          © {new Date().getFullYear()} MediBook. All rights reserved
+        </p>
       </div>
     </div>
   );
