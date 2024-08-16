@@ -16,6 +16,7 @@ const AdminPage = async() => {
             height={32}
             width={162}
             alt="logo"
+            className="h-8 w-fit"
           />
         </Link>
         <p className="text-16-semibold">Admin Dashboard</p>

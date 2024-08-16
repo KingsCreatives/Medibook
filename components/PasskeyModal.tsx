@@ -8,19 +8,16 @@ import { decryptKey, encryptKey } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
@@ -31,7 +28,7 @@ const PasskeyModal = () => {
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
 
-  const encryptedKey = typeof window !== "undefined" ? localStorage.getItem("accesskey") : null;
+  const encryptedKey = typeof window !== "undefined" ? window.localStorage.getItem("accesskey") : null;
 
   useEffect(()=>{
     const accesskey = encryptedKey && decryptKey(encryptedKey);

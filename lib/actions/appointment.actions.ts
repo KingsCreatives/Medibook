@@ -44,25 +44,14 @@ export const getAppointmentsData = async () => {
 
     const counts = (appointments.documents as Appointment[]).reduce(
       (acc, appointment) => {
-        switch (appointment.status) {
-          case "scheduled":
-            return {
-              ...acc,
-              scheduledCount: acc.scheduledCount + 1,
-            };
-          case "cancelled":
-            return {
-              ...acc,
-              cancelledCount: acc.cancelledCount + 1,
-            };
-          case "pending":
-            return {
-              ...acc,
-              pendingCount: acc.pendingCount + 1,
-            };
-          default:
-            return acc;
-        }
+       if(appointment.status === "scheduled"){
+         acc.scheduledCount += 1;
+       } else if(appointment.status === "cancelled"){
+         acc.cancelledCount += 1;
+       } else if(appointment.status === "pending"){
+         acc.pendingCount += 1;
+       }
+        return acc;
       },
       initialCounts
     );
