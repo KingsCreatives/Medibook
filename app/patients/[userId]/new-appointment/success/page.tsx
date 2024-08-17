@@ -18,7 +18,6 @@ const SuccessPage = async ({
     (doctor) => doctor.name === appointmentDocument.primaryPhysician
   );
 
-  console.log(appointmentDocument);
 
   return (
     <div className="flex h-screen max-h-screen px-[5%]">

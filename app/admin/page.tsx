@@ -1,12 +1,15 @@
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import StatCard from "@/components/StatCard";
 import { getAppointmentsData } from "@/lib/actions/appointment.actions";
+import {DataTable} from "@/components/Table/DataTable";
+import {columns} from "@/components/Table/columns";
+
 
 const AdminPage = async() => {
   const appointments = await getAppointmentsData();
-  
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
       <header className="admin-header">
@@ -50,6 +53,7 @@ const AdminPage = async() => {
             icon="/assets/icons/cancelled.svg"
           />
         </section>
+        <DataTable data={appointments.document} columns ={columns}/>
       </main>
     </div>
   );
