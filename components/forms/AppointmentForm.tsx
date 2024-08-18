@@ -23,10 +23,14 @@ const AppointmentForm = ({
   userId,
   patientId,
   type,
+  appointment,
+  setOpen
 }: {
   userId: string;
   patientId: string;
   type: "create" | "cancel" | "schedule";
+  appointment: Appointment | null;
+  setOpen: (open: boolean) => void
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);

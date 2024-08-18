@@ -8,6 +8,7 @@ import {DataTable} from "@/components/Table/DataTable";
 import {columns} from "@/components/Table/columns";
 
 
+
 const AdminPage = async() => {
   const appointments = await getAppointmentsData();
   return (
