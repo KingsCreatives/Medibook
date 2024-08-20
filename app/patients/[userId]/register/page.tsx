@@ -2,11 +2,12 @@ import React from 'react'
 import Image from 'next/image'
 import RegistrationForm from '@/components/forms/RegisterationForm';
 import { getUser } from '@/lib/actions/patient.actions';
+import *  as Sentry from '@sentry/nextjs'
 
 const Register = async ({ params: { userId } }: SearchParamProps) => {
   const user = await getUser(userId);
 
-  const year = new Date().getFullYear();
+  Sentry.metrics.set("user_view_register", user.name);
 
   return (
     <div className="flex h-screen max-h-screen">
@@ -24,7 +25,7 @@ const Register = async ({ params: { userId } }: SearchParamProps) => {
 
           <div className="text-14-regular mt-20 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
-              @{year} MediBook
+              @{new Date().getFullYear()} MediBook
             </p>
           </div>
         </div>
