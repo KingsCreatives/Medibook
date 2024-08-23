@@ -55,8 +55,10 @@ const PatientForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
-        <section className="mb-12 space-y-4">
-          <h1 className="header">Welcome to MediBook</h1>
+        <section className="mb-12 space-y-4 space-x-3">
+          <h2 className="header">
+            Welcome to <span className="text-green-500">MediBook</span>
+          </h2>
           <p className="text-dark-700">Ready for your first appointment?</p>
         </section>
 
